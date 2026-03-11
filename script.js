@@ -1,70 +1,73 @@
-const questions = [
-    { 
-        q: "¿Qué significa HTML?", 
-        img: "🌐",
-        a: ["HyperText Markup Language", "High Tech Modern Language", "HyperLink Mode"], 
-        correct: 0 
-    },
-    { 
-        q: "¿Qué lenguaje da color y estilo?", 
-        img: "🎨",
-        a: ["JavaScript", "HTML", "CSS"], 
-        correct: 2 
-    },
-    { 
-        q: "¿Cuál es el comando para subir cambios?", 
-        img: "📤",
-        a: ["git pull", "git push", "git init"], 
-        correct: 1 
-    }
-];
+const questions = {
+    historia: [
+        { q: "¿En qué año se fundó Bolivia?", options: ["1825", "1810", "1830"], correct: 0 },
+        { q: "¿Qué ciudad es la capital de Bolivia?", options: ["La Paz", "Sucre", "Cochabamba"], correct: 1 }
+    ],
+    deportes: [
+        { q: "¿Quién es el máximo goleador?", options: ["Martins", "Botero", "Etcheverry"], correct: 0 }
+    ]
+};
 
-let currentIndex = 0;
+let currentSet = [];
+let index = 0;
 let score = 0;
+let timer;
+let timeLeft = 26;
 
-function startGame() {
-    document.getElementById('home-screen').classList.add('hidden');
-    document.getElementById('game-screen').classList.remove('hidden');
+function startQuiz(cat) {
+    currentSet = questions[cat];
+    index = 0;
+    score = 0;
+    document.getElementById('welcome-screen').classList.add('hidden');
+    document.getElementById('quiz-screen').classList.remove('hidden');
     showQuestion();
 }
 
 function showQuestion() {
-    const q = questions[currentIndex];
-    document.getElementById('questionText').innerText = q.q;
-    document.getElementById('image-container').innerText = q.img;
-    document.getElementById('progress').innerText = `Pregunta ${currentIndex + 1} de ${questions.length}`;
+    if (index >= currentSet.length) return showResults();
     
-    // Actualizar barra de progreso
-    const percent = ((currentIndex + 1) / questions.length) * 100;
-    document.getElementById('bar').style.width = percent + "%";
-    
+    clearInterval(timer);
+    startTimer();
+
+    const q = currentSet[index];
+    document.getElementById('question-text').innerText = q.q;
     const container = document.getElementById('options-container');
     container.innerHTML = '';
-    
-    q.a.forEach((opt, i) => {
+
+    q.options.forEach((opt, i) => {
         const btn = document.createElement('button');
-        btn.classList.add('option-btn');
         btn.innerText = opt;
-        btn.onclick = () => checkAnswer(i);
+        btn.className = 'option-btn';
+        btn.onclick = () => {
+            if (i === q.correct) score++;
+            index++;
+            showQuestion();
+        };
         container.appendChild(btn);
     });
 }
 
-function checkAnswer(i) {
-    if(i === questions[currentIndex].correct) score++;
-    currentIndex++;
-    if(currentIndex < questions.length) showQuestion();
-    else showResults();
+function startTimer() {
+    timeLeft = 26;
+    document.getElementById('timer').innerText = timeLeft;
+    timer = setInterval(() => {
+        timeLeft--;
+        document.getElementById('timer').innerText = timeLeft;
+        if (timeLeft <= 0) {
+            index++;
+            showQuestion();
+        }
+    }, 1000);
 }
 
 function showResults() {
-    document.getElementById('game-screen').classList.add('hidden');
+    clearInterval(timer);
+    document.getElementById('quiz-screen').classList.add('hidden');
     document.getElementById('result-screen').classList.remove('hidden');
-    document.getElementById('score-text').innerText = `Lograste ${score} de ${questions.length} respuestas correctas`;
+    document.getElementById('score-text').innerText = `Puntos obtenidos: ${score * 100}`;
 }
 
 function resetGame() {
-    currentIndex = 0; score = 0;
-    document.getElementById('result-screen').classList.add('hidden');
-    document.getElementById('home-screen').classList.remove('hidden');
+    clearInterval(timer);
+    location.reload(); // Forma más rápida de volver al inicio
 }

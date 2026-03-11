@@ -1,97 +1,140 @@
 :root {
-    --primary: #6366f1;
-    --accent: #8b5cf6;
-    --bg-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    --bg-gradient: linear-gradient(180deg, #3A47D5 0%, #212882 100%);
+    --card-bg: rgba(255, 255, 255, 0.15);
+    --btn-red: #E86B6B;
+    --btn-green: #4ADE80;
     --white: #ffffff;
 }
 
 body {
-    font-family: 'Poppins', sans-serif;
-    background: var(--bg-gradient);
-    height: 100vh;
     margin: 0;
+    font-family: 'Poppins', sans-serif;
+    background-color: #e5e5e5;
     display: flex;
     justify-content: center;
     align-items: center;
+    height: 100vh;
 }
 
-.glass-container {
-    background: rgba(255, 255, 255, 0.95);
-    padding: 2.5rem;
-    border-radius: 30px;
-    box-shadow: 0 20px 40px rgba(0,0,0,0.2);
-    width: 380px;
-    text-align: center;
-    transition: all 0.3s ease;
+.app-container {
+    width: 360px;
+    height: 740px;
+    background: var(--bg-gradient);
+    border-radius: 40px;
+    padding: 30px 20px;
+    color: var(--white);
+    position: relative;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+    overflow: hidden;
 }
 
-.screen { transition: opacity 0.5s ease; }
-.hidden { display: none; }
+.hidden { display: none !important; }
 
-.icon-box {
-    font-size: 3rem;
-    margin-bottom: 1rem;
+/* HEADER */
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 25px;
 }
 
-h1 { color: #1e293b; font-size: 1.8rem; margin-bottom: 0.5rem; }
-p { color: #64748b; margin-bottom: 2rem; }
+.avatar-circle img {
+    width: 45px;
+    height: 45px;
+    background: #fff;
+    border-radius: 50%;
+}
 
-.main-btn {
-    background: var(--primary);
-    color: white;
+/* STATS */
+.stats-card {
+    background: var(--white);
+    border-radius: 20px;
+    display: flex;
+    padding: 15px;
+    color: #333;
+    justify-content: space-between;
+    margin-bottom: 30px;
+}
+
+.stat-item { display: flex; align-items: center; gap: 10px; }
+.badge.yellow { background: #FFD700; border-radius: 50%; padding: 5px 10px; }
+
+/* BOTONES PRINCIPALES */
+.main-actions {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 30px;
+}
+
+.btn-create, .btn-enter {
+    flex: 1;
     border: none;
-    padding: 15px 35px;
+    padding: 15px;
     border-radius: 15px;
-    font-weight: 600;
-    font-size: 1.1rem;
+    font-weight: bold;
+    color: white;
     cursor: pointer;
-    box-shadow: 0 4px 15px rgba(99, 102, 241, 0.4);
-    transition: 0.3s;
 }
 
-.main-btn:hover { transform: translateY(-3px); background: var(--accent); }
+.btn-create { background-color: var(--btn-red); }
+.btn-enter { background-color: var(--btn-green); }
 
-.q-image {
-    background: #f1f5f9;
-    height: 120px;
+/* CATEGORÍAS */
+.categories-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+}
+
+.cat-card {
+    background: var(--card-bg);
+    border-radius: 20px;
+    padding: 20px;
+    text-align: center;
+    backdrop-filter: blur(5px);
+    cursor: pointer;
+}
+
+.cat-icon { font-size: 30px; margin-bottom: 10px; }
+
+/* PANTALLA QUIZ */
+.timer-container {
     display: flex;
-    align-items: center;
     justify-content: center;
-    border-radius: 15px;
-    font-size: 3rem;
-    margin-bottom: 1.5rem;
+    margin: 20px 0;
+}
+
+.timer-circle {
+    width: 70px;
+    height: 70px;
+    border: 5px solid #4ADE80;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.question-title {
+    text-align: center;
+    font-size: 20px;
+    margin: 30px 0;
+}
+
+.options-list {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
 }
 
 .option-btn {
-    display: block;
-    width: 100%;
-    margin: 10px 0;
-    padding: 15px;
-    border: 2px solid #f1f5f9;
-    border-radius: 12px;
-    background: white;
-    font-weight: 500;
+    background: var(--card-bg);
+    border: none;
+    padding: 18px;
+    border-radius: 15px;
+    color: white;
+    text-align: left;
+    font-size: 16px;
     cursor: pointer;
-    transition: 0.2s;
-}
-
-.option-btn:hover {
-    border-color: var(--primary);
-    background: #eef2ff;
-    color: var(--primary);
-}
-
-/* Barra de progreso */
-.progress-bar {
-    background: #e2e8f0;
-    height: 8px;
-    border-radius: 10px;
-    margin-bottom: 10px;
-}
-.fill {
-    background: var(--primary);
-    height: 100%;
-    width: 0%;
-    border-radius: 10px;
-    transition: width 0.3s ease;
 }
